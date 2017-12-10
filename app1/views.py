@@ -36,6 +36,8 @@ def index(request):
         focusLocations = ''.join(ff.readlines())
         focusLocations = focusLocations.replace("\n","")
 
+    # focusDirs = list(map( (lambda x : unicodedata.normalize('NFKD', x).encode('ascii', 'ignore')), focusDirs ) )
+    # GUIDE : list(map( (lambda x : unicodedata.normalize('NFKD', x).encode('ascii', 'ignore')), filenames ) )
 
     context = {"focusPath":focusPath,
                 "focusName":focusInfo[0],
