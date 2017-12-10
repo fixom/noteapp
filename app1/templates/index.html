@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+    <div id="mynetwork" class="center-block" style="margin-top: 20px;"></div>
+    <div class="text-center" style="margin-top: 20px;">
+
+        <button class="btn btn-success" onclick="addNewNode('{{ focusPath }}');">Add new node</button>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#nodenamemodal">Edit the node name</button>
+        <button class="btn btn-danger" data-toggle="modal" data-target="#deletenodemodal">Delete the node</button>
+
+        <button class="btn btn-info" onclick="saveLocations('{{ focusPath }}');">Save locations</button>
+        <button class="btn btn-primary" onclick="navigateToParent('{{ focusPath }}');">Back to parent</button>
+    </div>
+
+
+    <div id="nodenamemodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit node name</h4>
+              </div>
+              <div class="modal-body">
+                <input id="editedfocusname" type="text" value="{{ focusName }}" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" onclick="editTheNode('{{ focusPath }}','{{ focusName }}')" data-dismiss="modal">Save</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="deletenodemodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete node</h4>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure? It will delete the node and every child node of it! </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-danger" onclick="deleteTheNode('{{ focusPath }}');" data-dismiss="modal">Delete</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="savelocationsmodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-body">
+                <p> Locations are saved. </p>
+              </div>
+            </div>
+        </div>
+    </div>
+
+
+    <style type="text/css">
+        #mynetwork {
+            width: 70%;
+            height: 400px;
+            alignment: center;
+            border: 1px solid lightgray;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        var childDirLabels = "{{ focusDirNames|safe }}".replace(/\'/ig,'\"').trim();
+        childDirLabels = JSON.parse(childDirLabels);
+        var childDirNames = "{{ focusDirs|safe }}".replace(/\'/ig,'\"').trim();
+        childDirNames = JSON.parse(childDirNames);
+
+        var childDirSize = childDirLabels.length;
+
+        // POSITION DATA ADDITION FROM SAVED FILE
+        var networkPositionJSON = '{{ focusLocations | safe}}';
+        var networkPositionData = JSON.parse(networkPositionJSON);
+
+        var nodeData = [];
+
+        function getLocationEntryFromID(locationsjson, nodeid){
+            for(var ii = 0;ii< childDirSize+1; ii++){
+                if(locationsjson[ii]["id"] == nodeid){
+                    return locationsjson[ii];
+                }
+            }
+
+        }
+
+        nodeData.push( {id: -1, group: 'focus', label: '{{ focusName }}',x: getLocationEntryFromID(networkPositionData,-1)["x"],y:getLocationEntryFromID(networkPositionData,-1)["y"]} );
+        for(var ii = 0;ii< childDirSize; ii++){nodeData.push( {id: childDirNames[ii], label: childDirLabels[ii], x:getLocationEntryFromID(networkPositionData,childDirNames[ii])["x"],y:getLocationEntryFromID(networkPositionData,childDirNames[ii])["y"]  } );}
+        var nodes = new vis.DataSet(nodeData);
+
+
+        var edgeData = [];
+        for(var ii = 0;ii< childDirSize; ii++){edgeData.push( {from: -1, to: childDirNames[ii] ,length: 250} );}
+        var edges = new vis.DataSet(edgeData);
+
+
+        var container = document.getElementById('mynetwork');
+        var data = {nodes: nodes,edges: edges,};
+        var options = {
+          layout:{
+              hierarchical:{
+                  enabled: false,
+                  levelSeparation: 170,
+              },
+          },
+          physics:{
+            enabled: false,
+          },
+          interaction: {
+            dragNodes: true,// do not allow dragging nodes
+            zoomView: true, // do not allow zooming
+            dragView: true,
+          },
+          edges:{
+              smooth: {
+                  enabled: false,
+                  type: "horizontal",
+                  roundness: 0.55
+                },
+          },
+          nodes:{
+            shape : 'box',
+            scaling: {label: {enabled: true,},},
+            font: '25px arial black',
+            margin: 15,
+            fixed: {
+              x:false,
+              y:false
+            },
+          },
+          groups: {
+            focus: {color:{background:'turquoise',border:'black',highlight:{background:'cyan',border:'black'}},fixed:{x:false,y:false},borderWidth:4}
+          },
+        };
+
+        // initialize your network!
+        var network = new vis.Network(container, data, options);
+
+
+        var ctrlPressed = false;
+        $(document).keydown(function(event){
+            if(event.which=="17")
+                ctrlPressed = true;
+        });
+
+        $(document).keyup(function(event){
+            if(event.which=="17")
+                ctrlPressed = false;
+        });
+
+
+        network.on("click",function (nwparams) {
+            var clickedNodeId = nwparams['nodes'][0]
+            if(clickedNodeId != undefined){
+                var clickedNode = nodes.get(clickedNodeId);
+                var clickedName = clickedNode["label"]
+
+                if(clickedName == "{{ focusName }}"){
+                    window.location.href = "/node?path="+"{{ focusPath }}";
+                }
+
+                var clickedDirIndex = childDirLabels.indexOf(clickedName);
+                var clickedDirName = childDirNames[clickedDirIndex];
+                if(clickedDirName != undefined){
+                    if(ctrlPressed){
+                        window.location.href = "/node?path="+"{{ focusPath }}"+"/"+clickedDirName;
+                    }else{
+                        window.location.href = "/index?path="+"{{ focusPath }}"+"/"+clickedDirName;  
+                    }
+                    
+                }
+            }
+        });
+
+    </script>
+
+{% endblock content %}

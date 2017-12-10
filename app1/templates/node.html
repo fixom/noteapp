@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+    <div id="savenotesmodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-body">
+                <p> Notes are saved. </p>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 10px;margin-left:40px;width:85%;">
+        <div style="width: 100%; height: 40px; font-size: 30px; color: #ffffff; font-family:KaTeX_Typewriter; background-color: #2E8B57;text-align: center" >
+            TAKE NOTES
+        </div>
+        <div id="toolbar">
+            <table>
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="100%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <tr>
+                    <td><button class="ql-bold"></button></td>
+                    <td>    <button class="ql-italic"></button></td>
+                    <td>    <button class="ql-underline"></button></td>
+                    <td>    <button class="ql-strike"></button></td>
+                    <td>    <button class="ql-code"></button></td>
+                    <td>    <button class="ql-blockquote"></button></td>
+                    <td>    <button class="ql-code-block"></button></td>
+                    <td>    <select class="ql-color"></select></td>
+                    <td>    <select class="ql-background"></select></td>
+                    <td>            </td>
+                    <td>
+                        <select class="ql-size">
+                            <option value="small"></option>
+                            <option selected></option>
+                            <option value="large"></option>
+                            <option value="huge"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="ql-header">
+                            <option value="1"></option>
+                            <option value="2"></option>
+                            <option value="3"></option>
+                            <option value="4"></option>
+                            <option value="5"></option>
+                            <option value="6"></option>
+                            <option selected></option>
+                        </select>
+                    </td>
+                    <td><select class="ql-font"></select></td>
+                    <td><button class="ql-clean"></button></td>
+                </tr>
+            </table>
+            <table>
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="100%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <col width="0%">
+                <tr>
+                    <td><select class="ql-align"></select></td>
+                    <td><button class="ql-list" value="bullet"></button></td>
+                    <td><button class="ql-list" value="ordered"></button></td>
+                    <td><button class="ql-indent" value="-1"></button></td>
+                    <td><button class="ql-indent" value="+1"></button></td>
+                    <td>                    </td>
+                    <td><button class="ql-link"></button></td>
+                    <td><button class="ql-image"></button></td>
+                    <td><button class="ql-video"></button></td>
+                    <td><button class="ql-formula"></button></td>
+                    <td><button class="ql-script" value="sub"></button></td>
+                    <td><button class="ql-script" value="super"></button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id = "editor" class="ql-container ql-snow" style="overflow:auto; height:350px;">
+            {{ notes|safe }}
+        </div>
+
+        <div align="right" style="margin-top: 20px;">
+            <button class="btn btn-info" onclick="navigateToParent('{{ focuspath }}');">Back to Parent</button>
+            <button class="btn btn-info" onclick="navigateToNetwork('{{ focuspath }}');">Back to Network</button>
+            <button class="btn btn-primary" onclick="saveNotes('{{ focuspath }}');">Save Notes</button>
+        </div>
+    </div>
+    <script>
+      var quill = new Quill('#editor', {
+        modules:{
+          toolbar: '#toolbar',
+        },
+        theme: 'snow'
+      });
+    </script>
+
+{% endblock content %}
