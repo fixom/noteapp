@@ -5,29 +5,88 @@
     <meta charset="utf-8">
     <title>NoteApp</title>
 
+{#      JQUERY#}
     <script type="text/javascript" src="/static/vendor/jquery/jquery-3.1.1.min.js"></script>
 
+{#      GRAPH#}
     <script src="/static/vendor/vis-4.19.1/dist/vis.js"></script>
     <link href="/static/vendor/vis-4.19.1/dist/vis.css" rel="stylesheet" type="text/css" />
 
+{#      BOOTSTRAP#}
     <script type="text/javascript" src="/static/vendor/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <link rel="stylesheet" href="/static/vendor/bootstrap-3.3.7-dist/css/bootstrap.css"/>
     <link  rel="stylesheet" href="/static/vendor/bootstrap-3.3.7-dist/css/bootstrap-theme.css"/>
 
-      <!--
-    <script src="/static/vendor/quill/quill.js"></script>
-    <script src="/static/vendor/quill/quill.min.js"></script>
-    <link href="/static/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="/static/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="/static/vendor/quill/quill.core.css" rel="stylesheet">
-    <script src="/static/vendor/quill/quill.core.js"></script>
-    -->
 
-    <script src="/static/vendor/quill/quill.min.js"></script>
-    <link href="/static/vendor/quill/quill.snow.css" rel="stylesheet">
 
-    <link href="/static/vendor/katex/katex.css" rel="stylesheet">
-    <script src="/static/vendor/katex/katex.js"></script>
+
+{#    HTML EDITOR  #}
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+      <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/froala_style.min.css">{# css of hr tag is updated.    #}
+      <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/froala_editor.min.css">
+      <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/froala_editor.pkgd.min.css">
+
+
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/char_counter.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/code_view.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/colors.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/emoticons.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/file.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/fullscreen.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/image.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/image_manager.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/line_breaker.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/table.min.css">
+        <link rel="stylesheet" href="/static/vendor/froala_editor_2.7.2/css/plugins/video.min.css">
+
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+
+
+      <script src="/static/vendor/froala_editor_2.7.2/js/froala_editor.min.js"></script>
+      <script src="/static/vendor/froala_editor_2.7.2/js/froala_editor.pkgd.min.js"></script>
+
+
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/align.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/char_counter.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/code_view.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/colors.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/emoticons.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/entities.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/file.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/font_family.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/font_size.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/fullscreen.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/image.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/image_manager.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/inline_style.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/line_breaker.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/link.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/lists.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/paragraph_format.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/paragraph_style.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/quote.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/save.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/table.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/url.min.js"></script>
+        <script src="/static/vendor/froala_editor_2.7.2/js/plugins/video.min.js"></script>
+
+{#      <!--#}
+{#    <script src="/static/vendor/quill/quill.js"></script>#}
+{#    <script src="/static/vendor/quill/quill.min.js"></script>#}
+{#    <link href="/static/vendor/quill/quill.snow.css" rel="stylesheet">#}
+{#    <link href="/static/vendor/quill/quill.bubble.css" rel="stylesheet">#}
+{#    <link href="/static/vendor/quill/quill.core.css" rel="stylesheet">#}
+{#    <script src="/static/vendor/quill/quill.core.js"></script>#}
+{#    -->#}
+{##}
+{#    <script src="/static/vendor/quill/quill.min.js"></script>#}
+{#    <link href="/static/vendor/quill/quill.snow.css" rel="stylesheet">#}
+{##}
+{#    <link href="/static/vendor/katex/katex.css" rel="stylesheet">#}
+{#    <script src="/static/vendor/katex/katex.js"></script>#}
 
     <!-- Implemented javascript and css file load. -->
     <script type="text/javascript" src="/static/js/index.js"></script>

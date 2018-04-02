@@ -5,7 +5,6 @@ import os
 import shutil
 import re
 import textwrap
-import unicodedata
 
 # Create your views here.
 
@@ -36,6 +35,7 @@ def index(request):
         focusLocations = ''.join(ff.readlines())
         focusLocations = focusLocations.replace("\n","")
 
+    # import unicodedata
     # focusDirs = list(map( (lambda x : unicodedata.normalize('NFKD', x).encode('ascii', 'ignore')), focusDirs ) )
     # GUIDE : list(map( (lambda x : unicodedata.normalize('NFKD', x).encode('ascii', 'ignore')), filenames ) )
 
@@ -66,6 +66,7 @@ def ajax(request):
 
         with open(focusFullPath+"/.notes.noteapp",'w') as ff:
             ff.write(request.GET['savehtml'])
+
     elif 'addnode' in request.GET and 'path' in request.GET:
         focusPath = request.GET['path']
         focusFullPath = settings.BASE_DIR + "/storage/data/" + focusPath

@@ -3,75 +3,12 @@
 {% block content %}
 
 
-    <div id="mynetwork" class="center-block" style="margin-top: 20px;"></div>
-    <div class="text-center" style="margin-top: 20px;">
-
-        <button class="btn btn-success" onclick="addNewNode('{{ focusPath }}');">Add new node</button>
-        <button class="btn btn-warning" data-toggle="modal" data-target="#nodenamemodal">Edit the node name</button>
-        <button class="btn btn-danger" data-toggle="modal" data-target="#deletenodemodal">Delete the node</button>
-
-        <button class="btn btn-info" onclick="saveLocations('{{ focusPath }}');">Save locations</button>
-        <button class="btn btn-primary" onclick="navigateToParent('{{ focusPath }}');">Back to parent</button>
-    </div>
-
-
-    <div id="nodenamemodal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit node name</h4>
-              </div>
-              <div class="modal-body">
-                <input id="editedfocusname" type="text" value="{{ focusName }}" />
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-primary" onclick="editTheNode('{{ focusPath }}','{{ focusName }}')" data-dismiss="modal">Save</button>
-              </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="deletenodemodal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Delete node</h4>
-              </div>
-              <div class="modal-body">
-                <p>Are you sure? It will delete the node and every child node of it! </p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-danger" onclick="deleteTheNode('{{ focusPath }}');" data-dismiss="modal">Delete</button>
-              </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="savelocationsmodal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-body">
-                <p> Locations are saved. </p>
-              </div>
-            </div>
-        </div>
-    </div>
-
-
-    <style type="text/css">
-        #mynetwork {
+    <div id="mynetwork" class="center-block" style="
+            margin-top: 20px;
             width: 70%;
             height: 400px;
             alignment: center;
-            border: 1px solid lightgray;
-        }
-    </style>
-
+            border: 1px solid lightgray;"></div>
     <script type="text/javascript">
 
         var childDirLabels = "{{ focusDirNames|safe }}".replace(/\'/ig,'\"').trim();
@@ -177,13 +114,72 @@
                     if(ctrlPressed){
                         window.location.href = "/node?path="+"{{ focusPath }}"+"/"+clickedDirName;
                     }else{
-                        window.location.href = "/index?path="+"{{ focusPath }}"+"/"+clickedDirName;  
+                        window.location.href = "/index?path="+"{{ focusPath }}"+"/"+clickedDirName;
                     }
-                    
+
                 }
             }
         });
 
+
+
     </script>
+
+
+    <div class="text-center" style="margin-top: 20px;">
+        <button class="btn btn-success" onclick="addNewNode('{{ focusPath }}');">Add new node</button>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#nodenamemodal">Edit the node name</button>
+        <button class="btn btn-danger" data-toggle="modal" data-target="#deletenodemodal">Delete the node</button>
+        <button class="btn btn-info" onclick="saveLocations('{{ focusPath }}');">Save locations</button>
+        <button class="btn btn-primary" onclick="navigateToParent('{{ focusPath }}');">Back to parent</button>
+    </div>
+
+
+    <div id="nodenamemodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit node name</h4>
+              </div>
+              <div class="modal-body">
+                <input id="editedfocusname" type="text" value="{{ focusName }}" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" onclick="editTheNode('{{ focusPath }}','{{ focusName }}')" data-dismiss="modal">Save</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="deletenodemodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete node</h4>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure? It will delete the node and every child node of it! </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-danger" onclick="deleteTheNode('{{ focusPath }}');" data-dismiss="modal">Delete</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="savelocationsmodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-body">
+                <p> Locations are saved. </p>
+              </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}
